@@ -9,7 +9,7 @@ function App() {
 
   const API_KEY = '4d8fb5b93d4af21d66a2948710284366' // OpenWeather API Key
   const WEATHER_API_URL = 'https://api.openweathermap.org/data/2.5/weather'
-  const GEO_API_URL = 'http://api.openweathermap.org/geo/1.0/direct'
+  const GEO_API_URL = 'https://api.openweathermap.org/geo/1.0/direct'  // Changed to https
 
   const fetchWeather = async (searchCity) => {
     try {
@@ -19,13 +19,15 @@ function App() {
         throw new Error('Por favor, digite o nome de uma cidade.')
       }
       const formattedCity = searchCity.trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-      // Primeiro, obter as coordenadas e informações detalhadas da localização
+      
+      // Added timeout and error handling for network issues
       const geoResponse = await axios.get(GEO_API_URL, {
         params: {
           q: formattedCity,
           limit: 1,
           appid: API_KEY
-        }
+        },
+        timeout: 10000 // 10 second timeout
       })
 
       if (!geoResponse.data || geoResponse.data.length === 0) {
