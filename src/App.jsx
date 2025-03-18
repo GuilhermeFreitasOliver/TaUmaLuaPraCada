@@ -8,7 +8,8 @@ function App() {
   const [error, setError] = useState(null)
 
   const API_KEY = '4d8fb5b93d4af21d66a2948710284366' // OpenWeather API Key
-  const API_URL = 'https://api.openweathermap.org/data/2.5/weather'
+  const WEATHER_API_URL = 'https://api.openweathermap.org/data/2.5/weather'
+  const GEO_API_URL = 'http://api.openweathermap.org/geo/1.0/direct'
 
   const fetchWeather = async (searchCity) => {
     try {
@@ -18,7 +19,24 @@ function App() {
         throw new Error('Por favor, digite o nome de uma cidade.')
       }
       const formattedCity = searchCity.trim().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-      const response = await axios.get(API_URL, {
+      // Primeiro, obter as coordenadas e informações detalhadas da localização
+      const geoResponse = await axios.get(GEO_API_URL, {
+        params: {
+          q: formattedCity,
+          limit: 1,
+          appid: API_KEY
+        }
+      })
+
+      if (!geoResponse.data || geoResponse.data.length === 0) {
+        throw new Error('Localização não encontrada.')
+      }
+
+      const locationData = geoResponse.data[0]
+      const state = locationData.state || ''
+      
+      // Agora, obter os dados do clima
+      const weatherResponse = await axios.get(WEATHER_API_URL, {
         params: {
           q: formattedCity,
           appid: API_KEY,
@@ -26,10 +44,13 @@ function App() {
           lang: 'pt_br'
         }
       })
-      if (!response.data) {
+      if (!weatherResponse.data) {
         throw new Error('Não foi possível obter os dados do clima.')
       }
-      setWeather(response.data)
+      setWeather({
+        ...weatherResponse.data,
+        state: state
+      })
     } catch (err) {
       if (err.response && err.response.status === 404) {
         setError('Cidade não encontrada. Verifique o nome e tente novamente.')
@@ -85,7 +106,10 @@ function App() {
 
                 {weather && (
                   <div className="text-center">
-                    <h2 className="text-2xl font-bold mb-4">{weather.name}</h2>
+                    <h2 className="text-2xl font-bold mb-4">
+                      {weather.name}
+                      {weather.state && `, ${weather.state}`}
+                    </h2>
                     <div className="text-6xl font-bold text-blue-600 mb-4">
                       {Math.round(weather.main.temp)}°C
                     </div>
