@@ -289,9 +289,12 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-400 to-blue-600 py-6 flex flex-col justify-center sm:py-12">
+    <div className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed py-6 flex flex-col justify-center sm:py-12"
+      style={{
+        backgroundImage: `linear-gradient(to bottom, rgba(59, 130, 246, 0.7), rgba(37, 99, 235, 0.7)), url('/weather-bg.jpg')`
+      }}>
       <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-        <div className="relative px-4 py-10 bg-white mx-8 md:mx-0 shadow rounded-3xl sm:p-10">
+        <div className="relative px-4 py-10 bg-white/90 backdrop-blur-sm mx-8 md:mx-0 shadow rounded-3xl sm:p-10">
           <div className="max-w-md mx-auto">
             <div className="divide-y divide-gray-200">
               <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
