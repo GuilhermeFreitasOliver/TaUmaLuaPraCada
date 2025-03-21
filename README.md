@@ -21,7 +21,7 @@ Aplicativo de previsão do tempo em tempo real desenvolvido com React, fornecend
 - React Icons
 - API Open-Meteo
 
-## Como Começar
+## Como Clonar o Repositório
 
 ### Pré-requisitos
 
@@ -78,4 +78,3 @@ Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICE
 
 - Ícones fornecidos por [React Icons](https://react-icons.github.io/react-icons/)
 - Dados meteorológicos fornecidos por [Open-Meteo](https://open-meteo.com/)
-```
