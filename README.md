@@ -1,7 +1,4 @@
-Vou recriar o README.md em português:
-
-```markdown:c:\Users\Guilherme\Documents\New-portifolio\TaUmaLuaPraCada\README.md
-# Tá Uma Lua Pra Cada
+## Tá Uma Lua Pra Cada
 
 Aplicativo de previsão do tempo em tempo real desenvolvido com React, fornecendo informações meteorológicas para cidades do Brasil e do mundo.
 
