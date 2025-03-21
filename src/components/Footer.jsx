@@ -2,7 +2,7 @@ export function Footer() {
   return (
     <footer className="text-center text-white text-sm py-4">
       <p>
-        Desenvolvido com ❤️ | Dados fornecidos por{' '}
+        Desenvolvido por Guizis | Dados fornecidos por{' '}
         <a 
           href="https://open-meteo.com/" 
           target="_blank" 

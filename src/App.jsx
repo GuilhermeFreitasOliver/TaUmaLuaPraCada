@@ -204,70 +204,88 @@ function App() {
 
   // Add missing getCurrentLocation function
   const getCurrentLocation = () => {
-    if (navigator.geolocation) {
-      setLoading(true)
-      setError(null)
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          try {
-            const { latitude, longitude } = position.coords
-            
-            // Get location name from coordinates
-            const geoResponse = await axios.get('https://api.bigdatacloud.net/data/reverse-geocode-client', {
-              params: {
-                latitude,
-                longitude,
-                localityLanguage: 'pt'
-              }
-            })
-            
-            const cityName = geoResponse.data.city || geoResponse.data.locality || 'Localização atual'
-            
-            // Get weather data
-            const weatherResponse = await axios.get(WEATHER_API_URL, {
-              params: {
-                latitude,
-                longitude,
-                current: 'temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m,apparent_temperature',
-                timezone: 'America/Sao_Paulo',
-                language: 'pt'
-              }
-            })
-            
-            setWeather({
-              name: cityName,
-              state: geoResponse.data.principalSubdivision || '',
-              main: {
-                temp: weatherResponse.data.current.temperature_2m,
-                humidity: weatherResponse.data.current.relative_humidity_2m,
-                feels_like: weatherResponse.data.current.apparent_temperature
-              },
-              wind: {
-                speed: weatherResponse.data.current.wind_speed_10m
-              },
-              weather: [{
-                id: weatherResponse.data.current.weather_code,
-                description: getWeatherDescription(weatherResponse.data.current.weather_code)
-              }]
-            })
-            
-            addToRecentSearches(cityName)
-          } catch (err) {
-            setError('Erro ao obter dados da localização atual')
-            console.error('Erro na geolocalização:', err)
-          } finally {
-            setLoading(false)
-          }
-        },
-        (err) => {
-          setError('Permissão de localização negada')
-          setLoading(false)
-          console.error('Erro de permissão:', err)
-        }
-      )
-    } else {
+    if (!navigator.geolocation) {
       setError('Geolocalização não suportada pelo seu navegador')
+      return
     }
+  
+    setLoading(true)
+    setError(null)
+  
+    const handleSuccess = async (position) => {
+      try {
+        const { latitude, longitude } = position.coords
+        
+        // Get location name from coordinates
+        const geoResponse = await axios.get('https://api.bigdatacloud.net/data/reverse-geocode-client', {
+          params: {
+            latitude,
+            longitude,
+            localityLanguage: 'pt'
+          }
+        })
+        
+        const cityName = geoResponse.data.city || geoResponse.data.locality || 'Localização atual'
+        
+        // Get weather data
+        const weatherResponse = await axios.get(WEATHER_API_URL, {
+          params: {
+            latitude,
+            longitude,
+            current: 'temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m,apparent_temperature',
+            timezone: 'America/Sao_Paulo',
+            language: 'pt'
+          }
+        })
+        
+        setWeather({
+          name: cityName,
+          state: geoResponse.data.principalSubdivision || '',
+          main: {
+            temp: weatherResponse.data.current.temperature_2m,
+            humidity: weatherResponse.data.current.relative_humidity_2m,
+            feels_like: weatherResponse.data.current.apparent_temperature
+          },
+          wind: {
+            speed: weatherResponse.data.current.wind_speed_10m
+          },
+          weather: [{
+            id: weatherResponse.data.current.weather_code,
+            description: getWeatherDescription(weatherResponse.data.current.weather_code)
+          }]
+        })
+        
+        addToRecentSearches(cityName)
+      } catch (err) {
+        setError('Erro ao obter dados da localização atual. Por favor, tente novamente.')
+        console.error('Erro na geolocalização:', err)
+      } finally {
+        setLoading(false)
+      }
+    }
+  
+    const handleError = (error) => {
+      setLoading(false)
+      switch (error.code) {
+        case error.PERMISSION_DENIED:
+          setError('Para usar sua localização atual, permita o acesso à localização nas configurações do seu navegador.')
+          break
+        case error.POSITION_UNAVAILABLE:
+          setError('Não foi possível determinar sua localização atual.')
+          break
+        case error.TIMEOUT:
+          setError('Tempo esgotado ao tentar obter sua localização.')
+          break
+        default:
+          setError('Ocorreu um erro ao tentar obter sua localização.')
+      }
+    }
+  
+    navigator.geolocation.getCurrentPosition(handleSuccess, handleError, {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
+    })
   }
 
   return (
