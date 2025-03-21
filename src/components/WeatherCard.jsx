@@ -70,7 +70,7 @@ export function WeatherCard({ weather, isCelsius, toggleUnit }) {
         </div>
         <div>
           <p className="text-gray-500">Vento</p>
-          <p className="font-bold">{weather.wind.speed} m/s</p>
+          <p className="font-bold">{weather.wind.speed} km/h</p>
         </div>
       </div>
       <div className="mt-3">
