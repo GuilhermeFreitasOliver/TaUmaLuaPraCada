@@ -9,6 +9,7 @@ import { RecentSearches } from './components/RecentSearches'
 import { WeatherCard } from './components/WeatherCard'
 // import { useWeather } from './hooks/useWeather' // Comment this out for now
 import { Footer } from './components/Footer'
+import weatherBg from './assets/weather-bg.jpg'
 
 // Move this helper function before App
 const getWeatherDescription = (code) => {
@@ -289,9 +290,10 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed py-6 flex flex-col justify-center sm:py-12"
+    <div 
+      className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed py-6 flex flex-col justify-center sm:py-12"
       style={{
-        backgroundImage: `linear-gradient(to bottom, rgba(59, 130, 246, 0.7), rgba(37, 99, 235, 0.7)), url('/weather-bg.jpg')`
+        backgroundImage: `linear-gradient(to bottom, rgba(59, 130, 246, 0.7), rgba(37, 99, 235, 0.7)), url(${weatherBg})`
       }}>
       <div className="relative py-3 sm:max-w-xl sm:mx-auto">
         <div className="relative px-4 py-10 bg-white/90 backdrop-blur-sm mx-8 md:mx-0 shadow rounded-3xl sm:p-10">
