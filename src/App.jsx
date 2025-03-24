@@ -336,7 +336,7 @@ function App() {
       {/* Theme toggle button */}
       <button
         onClick={() => setIsDark(!isDark)}
-        className="fixed top-4 right-4 p-2 rounded-full bg-opacity-50 backdrop-blur-sm transition-all hover:scale-110"
+        className="fixed top-4 right-4 p-2 rounded-full bg-opacity-50 backdrop-blur-sm transition-all hover:scale-110 z-50"
         aria-label="Toggle theme"
       >
         {isDark ? (
