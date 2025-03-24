@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import debounce from 'lodash/debounce'
 import axios from 'axios'
 import { WiDaySunny, WiNightClear, WiRain, WiDayRain, WiNightRain, 
-         WiThunderstorm, WiCloud, WiCloudy } from 'react-icons/wi'
+         WiThunderstorm, WiCloud, WiCloudy, WiMoonAltWaxingCrescent4 } from 'react-icons/wi'
 import { LoadingSpinner } from './components/LoadingSpinner'
 import { SearchForm } from './components/SearchForm'
 import { RecentSearches } from './components/RecentSearches'
@@ -10,6 +10,11 @@ import { WeatherCard } from './components/WeatherCard'
 // import { useWeather } from './hooks/useWeather' // Comment this out for now
 import { Footer } from './components/Footer'
 import weatherBg from './assets/weather-bg.jpg'
+import weatherDayBg from './assets/weather-bg.jpg'
+import weatherNightBg from './assets/weather-bg.jpg'
+
+// Remove this duplicate import
+// import weatherBg from './assets/weather-bg.jpg'
 
 // Move this helper function before App
 const getWeatherDescription = (code) => {
@@ -34,6 +39,9 @@ const getWeatherDescription = (code) => {
   return descriptions[code] || 'Desconhecido'
 }
 
+// Remove the duplicate import line below
+// import { WiMoonAltWaxingCrescent4, WiDaySunny } from 'react-icons/wi'
+
 function App() {
   const [city, setCity] = useState('')
   const [weather, setWeather] = useState(null)
@@ -45,6 +53,7 @@ function App() {
   })
   // Add missing isCelsius state
   const [isCelsius, setIsCelsius] = useState(true)
+  const [isNight, setIsNight] = useState(false)  // Add this line
 
   // Implement debounced search
   const debouncedFetchWeather = useCallback(
@@ -289,18 +298,65 @@ function App() {
     })
   }
 
+  useEffect(() => {
+    const checkTime = () => {
+      const hours = new Date().getHours()
+      setIsNight(hours >= 18 || hours < 6)
+    }
+    
+    checkTime() // Initial check
+    const interval = setInterval(checkTime, 60000) // Check every minute
+    
+    return () => clearInterval(interval)
+  }, [])
+
+  // Add isDark state with other states
+  const [isDark, setIsDark] = useState(() => {
+    const saved = localStorage.getItem('theme')
+    return saved ? JSON.parse(saved) : false
+  })
+
+  // Add effect to save theme preference
+  useEffect(() => {
+    localStorage.setItem('theme', JSON.stringify(isDark))
+  }, [isDark])
+
   return (
     <div 
-      className="min-h-screen bg-cover bg-center bg-no-repeat bg-fixed py-6 flex flex-col justify-center sm:py-12"
+      className={`min-h-screen bg-cover bg-center bg-no-repeat bg-fixed py-6 flex flex-col justify-center sm:py-12 ${
+        isDark ? 'text-white' : 'text-gray-900'
+      }`}
       style={{
-        backgroundImage: `linear-gradient(to bottom, rgba(59, 130, 246, 0.7), rgba(37, 99, 235, 0.7)), url(${weatherBg})`
+        backgroundImage: `linear-gradient(to bottom, 
+          ${isDark 
+            ? 'rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.5)'
+            : 'rgba(255, 255, 255, 0.4), rgba(219, 234, 254, 0.5)'
+          }), url(${weatherBg})`
       }}>
+      {/* Theme toggle button */}
+      <button
+        onClick={() => setIsDark(!isDark)}
+        className="fixed top-4 right-4 p-2 rounded-full bg-opacity-50 backdrop-blur-sm transition-all hover:scale-110"
+        aria-label="Toggle theme"
+      >
+        {isDark ? (
+          <WiDaySunny className="w-8 h-8 text-yellow-300" />
+        ) : (
+          <WiMoonAltWaxingCrescent4 className="w-8 h-8 text-gray-800" />
+        )}
+      </button>
+
       <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-        <div className="relative px-4 py-10 bg-white/90 backdrop-blur-sm mx-8 md:mx-0 shadow rounded-3xl sm:p-10">
+        <div className={`relative px-4 py-10 mx-8 md:mx-0 shadow rounded-3xl sm:p-10
+          ${isDark 
+            ? 'bg-slate-800/90 text-white' 
+            : 'bg-white/95 text-gray-900'}`}>
           <div className="max-w-md mx-auto">
             <div className="divide-y divide-gray-200">
-              <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
-                <h1 className="text-3xl font-bold text-center mb-8 text-blue-600">Previsão do Tempo</h1>
+              <div className="py-8 text-base leading-6 space-y-4 sm:text-lg sm:leading-7">
+                <h1 className={`text-3xl font-bold text-center mb-8 ${isDark ? 'text-blue-400' : 'text-blue-700'}`}>
+                  Previsão do Tempo
+                </h1>
                 <SearchForm 
                   city={city}
                   setCity={setCity}
