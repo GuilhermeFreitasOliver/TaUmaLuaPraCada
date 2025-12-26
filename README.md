@@ -2,35 +2,41 @@
 
 Uma aplicação web para consultar clima e previsões de forma rápida, com busca por cidade e histórico de pesquisas.
 
-**Live Demo:** https://ta-uma-lua-pra-cada.vercel.app/
-**Stack:** React + TypeScript + Vite (e APIs de clima/geocoding)
+🔗 **Live Demo:** [https://ta-uma-lua-pra-cada.vercel.app/](https://ta-uma-lua-pra-cada.vercel.app/)
+🛠 **Stack:** React + TypeScript + Vite (APIs de clima e geocoding)
 
 ---
 
 ## ✨ Funcionalidades
-- Buscar clima por cidade
-- Exibir condições atuais e previsão
-- Histórico de cidades pesquisadas
-- Tratamento de estados: loading / erro / vazio
+
+* Buscar clima por cidade
+* Exibir condições atuais e previsão
+* Histórico de cidades pesquisadas
+* Tratamento de estados: loading / erro / vazio
 
 ---
 
 ## 🖼️ Preview
 
-![Home](./docs/screenshots/home.png)
-![Busca](./docs/screenshots/search.png)
-
+![Home](docs/screenshots/home.png)
+![Busca](docs/screenshots/search.png)
 
 ---
 
 ## 🧭 Como funciona (arquitetura rápida)
-Fluxo principal:
-1. Usuário digita uma cidade
-2. App resolve coordenadas (Geocoding)
-3. App consulta a API de clima com latitude/longitude
-4. UI renderiza dados + salva no histórico
 
-Estrutura :
+### Fluxo principal
+
+1. Usuário digita uma cidade
+2. A aplicação resolve as coordenadas (Geocoding)
+3. A API de clima é consultada com latitude e longitude
+4. A UI renderiza os dados e salva no histórico
+
+---
+
+## 📁 Estrutura do projeto
+
+```text
 .
 ├── docs/
 │   └── screenshots/        # Imagens usadas no README
@@ -48,34 +54,37 @@ Estrutura :
 │   ├── App.jsx             # Componente raiz da aplicação
 │   ├── main.jsx            # Ponto de entrada (React + Vite)
 │   └── index.css           # Estilos globais
-├── index.html               # HTML base
-├── vite.config.js           # Configuração do Vite
-├── tailwind.config.js       # Configuração do Tailwind CSS
+├── index.html              # HTML base
+├── vite.config.js          # Configuração do Vite
+├── tailwind.config.js      # Configuração do Tailwind CSS
 └── package.json
-
+```
 
 ---
 
 ## 🚀 Como rodar localmente
+
 ### Pré-requisitos
-- Node.js (recomendado LTS)
+
+* Node.js (versão LTS recomendada)
 
 ### Instalação
+
 ```bash
 git clone https://github.com/GuilhermeFreitasOliver/TaUmaLuaPraCada.git
 cd TaUmaLuaPraCada
 npm install
-````
+```
 
 ### Variáveis de ambiente
 
-Crie um `.env` baseado no `.env.example`:
+Crie um arquivo `.env` baseado no `.env.example`:
 
 ```bash
 cp .env.example .env
 ```
 
-### Rodar
+### Executar
 
 ```bash
 npm run dev
@@ -86,7 +95,7 @@ npm run dev
 ## 🗺️ Roadmap
 
 * [ ] Favoritar cidades
-* [ ] Cache de resultados (localStorage) por 10–30 min
+* [ ] Cache de resultados com localStorage (10–30 min)
 * [ ] Modo escuro
 * [ ] Melhorias de acessibilidade (aria-live, foco)
 
@@ -95,5 +104,3 @@ npm run dev
 ## 📄 Licença
 
 Este projeto está sob a licença MIT.
-
-```
