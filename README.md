@@ -1,80 +1,99 @@
-## Tá Uma Lua Pra Cada
+# Tá Uma Lua Pra Cada 🌙
 
-Aplicativo de previsão do tempo em tempo real desenvolvido com React, fornecendo informações meteorológicas para cidades do Brasil e do mundo.
+Uma aplicação web para consultar clima e previsões de forma rápida, com busca por cidade e histórico de pesquisas.
 
-## Funcionalidades
+**Live Demo:** https://ta-uma-lua-pra-cada.vercel.app/
+**Stack:** React + TypeScript + Vite (e APIs de clima/geocoding)
 
-- 🌍 Busca de previsão do tempo por cidade
-- 📍 Previsão baseada na localização atual
-- 🌡️ Exibição de temperatura em Celsius e Fahrenheit
-- 🕒 Atualizações em tempo real
-- 📱 Design responsivo
-- 🔍 Histórico de pesquisas
-- 🌙 Ícones dinâmicos dia/noite
+---
 
-## Tecnologias Utilizadas
+## ✨ Funcionalidades
+- Buscar clima por cidade
+- Exibir condições atuais e previsão
+- Histórico de cidades pesquisadas
+- Tratamento de estados: loading / erro / vazio
 
-- React 18
-- Vite
-- TailwindCSS
-- Axios
-- React Icons
-- API Open-Meteo
+---
 
-## Como Clonar o Repositório
+## 🖼️ Preview
 
+![Home](./docs/screenshots/home.png)
+![Busca](./docs/screenshots/search.png)
+
+
+---
+
+## 🧭 Como funciona (arquitetura rápida)
+Fluxo principal:
+1. Usuário digita uma cidade
+2. App resolve coordenadas (Geocoding)
+3. App consulta a API de clima com latitude/longitude
+4. UI renderiza dados + salva no histórico
+
+Estrutura :
+.
+├── docs/
+│   └── screenshots/        # Imagens usadas no README
+├── public/                 # Arquivos públicos (ícones, imagens)
+├── src/
+│   ├── assets/             # Imagens e assets visuais
+│   ├── components/         # Componentes reutilizáveis da UI
+│   │   ├── ErrorBoundary.jsx
+│   │   ├── Footer.jsx
+│   │   ├── LoadingSpinner.jsx
+│   │   ├── RecentSearches.jsx
+│   │   ├── SearchForm.jsx
+│   │   ├── WeatherCard.jsx
+│   │   └── WeatherIcon.jsx
+│   ├── App.jsx             # Componente raiz da aplicação
+│   ├── main.jsx            # Ponto de entrada (React + Vite)
+│   └── index.css           # Estilos globais
+├── index.html               # HTML base
+├── vite.config.js           # Configuração do Vite
+├── tailwind.config.js       # Configuração do Tailwind CSS
+└── package.json
+
+
+---
+
+## 🚀 Como rodar localmente
 ### Pré-requisitos
-
-- Node.js (versão 16 ou superior)
-- npm ou yarn
+- Node.js (recomendado LTS)
 
 ### Instalação
-
-1. Clone o repositório
 ```bash
 git clone https://github.com/GuilhermeFreitasOliver/TaUmaLuaPraCada.git
-```
-
-2. Instale as dependências
-```bash
+cd TaUmaLuaPraCada
 npm install
+````
+
+### Variáveis de ambiente
+
+Crie um `.env` baseado no `.env.example`:
+
+```bash
+cp .env.example .env
 ```
 
-3. Inicie o servidor de desenvolvimento
+### Rodar
+
 ```bash
 npm run dev
 ```
 
-O aplicativo estará disponível em `http://localhost:5173`
+---
 
-### Build para Produção
+## 🗺️ Roadmap
 
-Para criar uma build de produção:
+* [ ] Favoritar cidades
+* [ ] Cache de resultados (localStorage) por 10–30 min
+* [ ] Modo escuro
+* [ ] Melhorias de acessibilidade (aria-live, foco)
 
-```bash
-npm run build
+---
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT.
+
 ```
-
-## APIs Utilizadas
-
-Este projeto utiliza as seguintes APIs:
-
-- [Open-Meteo Weather API](https://open-meteo.com/) - Para dados meteorológicos
-- [Open-Meteo Geocoding API](https://open-meteo.com/en/docs/geocoding-api) - Para coordenadas de localização
-
-## Como Contribuir
-
-1. Faça um Fork do projeto
-2. Crie sua branch de feature (`git checkout -b feature/NovaFuncionalidade`)
-3. Faça commit das suas alterações (`git commit -m 'Adiciona nova funcionalidade'`)
-4. Faça push para a branch (`git push origin feature/NovaFuncionalidade`)
-5. Abra um Pull Request
-
-## Licença
-
-Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
-
-## Agradecimentos
-
-- Ícones fornecidos por [React Icons](https://react-icons.github.io/react-icons/)
-- Dados meteorológicos fornecidos por [Open-Meteo](https://open-meteo.com/)
