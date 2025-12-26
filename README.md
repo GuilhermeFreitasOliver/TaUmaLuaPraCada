@@ -1,4 +1,6 @@
 # Tá Uma Lua Pra Cada 🌙
+![License](https://img.shields.io/badge/license-MIT-green)
+
 
 Uma aplicação web para consultar clima e previsões de forma rápida, com busca por cidade e histórico de pesquisas.
 
@@ -10,10 +12,10 @@ Uma aplicação web para consultar clima e previsões de forma rápida, com busc
 
 ## ✨ Funcionalidades
 
-* Buscar clima por cidade
-* Exibir condições atuais e previsão
-* Histórico de cidades pesquisadas
-* Tratamento de estados: loading / erro / vazio
+- Buscar clima por cidade
+- Exibir condições atuais e previsão
+- Histórico de cidades pesquisadas
+- Tratamento de estados: loading / erro / vazio
 
 ---
 
@@ -67,7 +69,7 @@ Uma aplicação web para consultar clima e previsões de forma rápida, com busc
 
 ### Pré-requisitos
 
-* Node.js (versão LTS recomendada)
+- Node.js (versão LTS recomendada)
 
 ### Instalação
 
@@ -95,11 +97,10 @@ npm run dev
 
 ## 🗺️ Roadmap
 
-* [x] Modo escuro
-* [ ] Favoritar cidades
-* [ ] Cache de resultados com localStorage (10–30 min)
-* [ ] Melhorias de acessibilidade (aria-live, foco)
-
+- [x] Modo escuro
+- [ ] Favoritar cidades
+- [ ] Cache de resultados com localStorage (10–30 min)
+- [ ] Melhorias de acessibilidade (aria-live, foco)
 
 ---
 
