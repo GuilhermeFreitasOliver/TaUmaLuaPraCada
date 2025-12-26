@@ -3,6 +3,7 @@
 Uma aplicação web para consultar clima e previsões de forma rápida, com busca por cidade e histórico de pesquisas.
 
 🔗 **Live Demo:** [https://ta-uma-lua-pra-cada.vercel.app/](https://ta-uma-lua-pra-cada.vercel.app/)
+
 🛠 **Stack:** React + TypeScript + Vite (APIs de clima e geocoding)
 
 ---
@@ -94,10 +95,11 @@ npm run dev
 
 ## 🗺️ Roadmap
 
+* [x] Modo escuro
 * [ ] Favoritar cidades
 * [ ] Cache de resultados com localStorage (10–30 min)
-* [ ] Modo escuro
 * [ ] Melhorias de acessibilidade (aria-live, foco)
+
 
 ---
 
