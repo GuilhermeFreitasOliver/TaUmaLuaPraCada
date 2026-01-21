@@ -61,6 +61,7 @@ Uma aplicação web para consultar clima e previsões de forma rápida, com busc
 ├── vite.config.js          # Configuração do Vite
 ├── tailwind.config.js      # Configuração do Tailwind CSS
 └── package.json
+z
 ```
 
 ---
